@@ -214,42 +214,6 @@
       "when": "same_symbols",
       "count": 9,
       "group": "same_symbols"
-    },
-    "same_symbols_horizontally": {
-      "reward_multiplier": 2,
-      "when": "linear_symbols",
-      "group": "horizontally_linear_symbols",
-      "covered_areas": [
-        ["0:0", "0:1", "0:2"],
-        ["1:0", "1:1", "1:2"],
-        ["2:0", "2:1", "2:2"]
-      ]
-    },
-    "same_symbols_vertically": {
-      "reward_multiplier": 2,
-      "when": "linear_symbols",
-      "group": "vertically_linear_symbols",
-      "covered_areas": [
-        ["0:0", "1:0", "2:0"],
-        ["0:1", "1:1", "2:1"],
-        ["0:2", "1:2", "2:2"]
-      ]
-    },
-    "same_symbols_diagonally_left_to_right": {
-      "reward_multiplier": 5,
-      "when": "linear_symbols",
-      "group": "ltr_diagonally_linear_symbols",
-      "covered_areas": [
-        ["0:0", "1:1", "2:2"]
-      ]
-    },
-    "same_symbols_diagonally_right_to_left": {
-      "reward_multiplier": 5,
-      "when": "linear_symbols",
-      "group": "rtl_diagonally_linear_symbols",
-      "covered_areas": [
-        ["0:2", "1:1", "2:0"]
-      ]
     }
   }
 }

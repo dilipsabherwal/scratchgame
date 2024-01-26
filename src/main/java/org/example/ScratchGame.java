@@ -12,7 +12,7 @@ public class ScratchGame {
 
     public static void main(String[] args) {
         if (args.length != 4 || !args[0].equals("--config") || !args[2].equals("--betting-amount")) {
-            System.out.println("Invalid arguments. Usage: java -jar <your-jar-file> --config config.json --betting-amount 100");
+            System.out.println("Invalid arguments. Usage: java -jar <your-jar-file> --config config.json --betting-amount <amount>");
             System.exit(1);
         }
 
@@ -48,7 +48,6 @@ public class ScratchGame {
             System.out.println(result);
         } catch (Exception e) {
             System.out.println("Error during game execution: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -156,7 +155,7 @@ public class ScratchGame {
     }
 
     public int calculateReward(List<List<String>> matrix, JsonObject config, int bettingAmount,
-                                Map<String, List<String>> appliedWinningCombinations, StringBuilder appliedBonusSymbol) {
+                               Map<String, List<String>> appliedWinningCombinations, StringBuilder appliedBonusSymbol) {
         int reward = 0;
 
         JsonObject winCombinations = config.getAsJsonObject("win_combinations");
@@ -241,35 +240,6 @@ public class ScratchGame {
                         }
                     }
                 }
-
-            } else if (winCombinationDetails.has("when") && winCombinationDetails.get("when").getAsString().equals("linear_symbols")) {
-                JsonElement countElement = winCombinationDetails.get("count");
-                int count = (countElement != null && !countElement.isJsonNull()) ? countElement.getAsInt() : 0;
-
-                for (int col = 0; col < matrix.get(0).size(); col++) {
-                    int consecutiveCount = 0;
-                    String currentSymbol = null;
-
-                    for (int row = 0; row < matrix.size(); row++) {
-                        String symbol = matrix.get(row).get(col);
-
-                        if (symbol.equals(currentSymbol)) {
-                            consecutiveCount++;
-                        } else {
-                            consecutiveCount = 1;
-                            currentSymbol = symbol;
-                        }
-
-                        if (consecutiveCount == count) {
-                            for (int i = 0; i < count; i++) {
-                                reward += bettingAmount * symbols.getAsJsonObject(symbol).get("reward_multiplier").getAsDouble() *
-                                        winCombinationDetails.get("reward_multiplier").getAsDouble();
-                                appliedWinningCombinations.computeIfAbsent(winCombinationKey, k -> new ArrayList<>()).add(symbol);
-                            }
-                            consecutiveCount = 0;
-                        }
-                    }
-                }
             }
         }
         return reward;
@@ -317,7 +287,6 @@ public class ScratchGame {
                 consecutiveCount = 0;
             }
         }
-
         return matchingGroup;
     }
 }
